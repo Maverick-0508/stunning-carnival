@@ -1,10 +1,12 @@
 package com.weatheralert.app
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.weatheralert.app.databinding.ActivitySettingsBinding
 import com.weatheralert.app.models.AlertType
+import com.weatheralert.app.utils.LocationHelper
 import com.weatheralert.app.utils.PreferencesManager
 
 class SettingsActivity : AppCompatActivity() {
@@ -20,9 +22,16 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.title_settings)
 
         prefsManager = PreferencesManager(this)
+        setupCitySuggestions()
         loadSettings()
 
         binding.btnSaveSettings.setOnClickListener { saveSettings() }
+    }
+
+    private fun setupCitySuggestions() {
+        val cities = LocationHelper.getKenyanCities()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, cities)
+        binding.etCity.setAdapter(adapter)
     }
 
     private fun loadSettings() {

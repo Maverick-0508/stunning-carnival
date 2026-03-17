@@ -28,6 +28,9 @@ class WeatherCheckWorker(
             if (response.isSuccessful) {
                 val weatherData = response.body() ?: return Result.failure()
                 val alerts = CalamityDetector.detectCalamities(weatherData)
+                if (alerts.isNotEmpty()) {
+                    prefsManager.saveAlerts(alerts)
+                }
                 val notificationHelper = NotificationHelper(applicationContext)
                 alerts.forEach { alert ->
                     if (prefsManager.isAlertTypeEnabled(alert.type)) {

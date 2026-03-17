@@ -23,4 +23,5 @@
     <string name="settings_saved">Settings saved!</string>
     <string name="error_no_api_key">Please set your OpenWeatherMap API key in Settings</string>
     <string name="error_city_empty">City name cannot be empty</string>
+    <string name="no_alerts_history">No alerts recorded yet.\nAlert history will appear here after the app detects calamity conditions.</string>
 </resources>

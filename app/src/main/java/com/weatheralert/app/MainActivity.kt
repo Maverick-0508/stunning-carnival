@@ -127,6 +127,10 @@ class MainActivity : AppCompatActivity() {
                         val alerts = CalamityDetector.detectCalamities(weather)
                         alertAdapter.updateAlerts(alerts)
 
+                        if (alerts.isNotEmpty()) {
+                            prefsManager.saveAlerts(alerts)
+                        }
+
                         binding.tvAlertsHeader.text = if (alerts.isEmpty()) {
                             getString(R.string.no_active_alerts)
                         } else {

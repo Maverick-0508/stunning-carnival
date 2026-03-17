@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.weatheralert.app.adapters.AlertAdapter
 import com.weatheralert.app.databinding.ActivityAlertsBinding
-import com.weatheralert.app.models.AlertType
-import com.weatheralert.app.models.CalamityAlert
+import com.weatheralert.app.utils.PreferencesManager
 
 class AlertsActivity : AppCompatActivity() {
 
@@ -30,23 +29,17 @@ class AlertsActivity : AppCompatActivity() {
     }
 
     private fun loadAlerts() {
-        val sampleAlerts = listOf(
-            CalamityAlert(
-                type = AlertType.HEAVY_RAIN,
-                title = "Heavy Rain Warning",
-                description = "Heavy rainfall expected in the coming hours.",
-                severity = CalamityAlert.Severity.HIGH,
-                city = "Nairobi"
-            ),
-            CalamityAlert(
-                type = AlertType.FLOOD,
-                title = "Flood Risk Advisory",
-                description = "River levels rising. Avoid low-lying areas.",
-                severity = CalamityAlert.Severity.MEDIUM,
-                city = "Nairobi"
-            )
-        )
-        alertAdapter.updateAlerts(sampleAlerts)
+        val prefs = PreferencesManager(this)
+        val stored = prefs.getStoredAlerts()
+        alertAdapter.updateAlerts(stored)
+
+        if (stored.isEmpty()) {
+            binding.tvNoAlerts.visibility = android.view.View.VISIBLE
+            binding.recyclerAllAlerts.visibility = android.view.View.GONE
+        } else {
+            binding.tvNoAlerts.visibility = android.view.View.GONE
+            binding.recyclerAllAlerts.visibility = android.view.View.VISIBLE
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
