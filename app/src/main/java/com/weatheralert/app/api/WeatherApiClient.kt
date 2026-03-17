@@ -1,6 +1,6 @@
 package com.weatheralert.app.api
 
-import android.os.Build
+import com.weatheralert.app.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,7 +13,7 @@ object WeatherApiClient {
     private val okHttpClient = OkHttpClient.Builder()
         .apply {
             // Enable detailed logging only on debug builds to avoid leaking API keys in production
-            if (Build.TYPE == "userdebug" || Build.TYPE == "eng") {
+            if (BuildConfig.DEBUG) {
                 addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })

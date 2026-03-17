@@ -13,7 +13,10 @@ import java.util.concurrent.TimeUnit
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+            // WorkManager enforces a minimum periodic interval of 15 minutes.
+            // The interval_values array only contains values >= 60, so this is always satisfied.
             val intervalMinutes = PreferencesManager(context).monitoringIntervalMinutes.toLong()
+                .coerceAtLeast(15L)
             val workRequest = PeriodicWorkRequestBuilder<WeatherCheckWorker>(intervalMinutes, TimeUnit.MINUTES)
                 .build()
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
