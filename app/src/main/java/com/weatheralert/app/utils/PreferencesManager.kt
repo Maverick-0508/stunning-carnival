@@ -14,6 +14,7 @@ class PreferencesManager(context: Context) {
         private const val KEY_API_KEY = "api_key"
         private const val KEY_INTERVAL = "monitoring_interval"
         private const val DEFAULT_CITY = "Nairobi"
+        // Get your free API key at https://openweathermap.org/appid
         const val DEFAULT_API_KEY = "YOUR_API_KEY_HERE"
         private const val DEFAULT_INTERVAL = 180
     }

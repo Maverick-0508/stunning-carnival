@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun scheduleWeatherMonitoring() {
-        val intervalMinutes = prefsManager.monitoringIntervalMinutes.toLong()
+        val intervalMinutes = prefsManager.monitoringIntervalMinutes.toLong().coerceAtLeast(15L)
         val workRequest = PeriodicWorkRequestBuilder<WeatherCheckWorker>(
             intervalMinutes, TimeUnit.MINUTES
         ).build()
